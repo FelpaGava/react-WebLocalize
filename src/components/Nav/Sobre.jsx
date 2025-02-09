@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Sobre() {
   return (
-    <Container className="mt-4">
+    <Container className="cadastroContainer">
       <div className="sobreContainer">
-        <div className="sobreTitle">
+        <div className="Title">
           <h2>Sobre o Projeto</h2>
         </div>
         <p>

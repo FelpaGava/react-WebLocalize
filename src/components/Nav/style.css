@@ -75,6 +75,54 @@
     color: #000000;
 }
 
+.cadastroContainer {
+    padding: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    & .cadastroContainer h5 {
+        margin-bottom: 20px;
+        font-weight: bolder;
+      }
+
+    &  .cadastroContainer p {
+        margin-bottom: 20px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+      }
+
+    &  .textDanger {
+        margin-bottom: 10px;
+      }
+    
+    & .modalBody {
+        padding: 15px;
+      }
+
+      button {
+        margin-top: 10px;
+        background-color: green;
+        border-color: #000;
+      }
+
+      button :hover {
+        opacity: 0.8;
+        background-color: green;
+        border-color: #000;
+      }
+      
+  }
+
+  .buttonModal {
+    margin-top: 10px;
+    background-color: green;
+    border-color: #000;
+  }
+
+  
 .sobreContainer {
     padding: 20px;
     max-width: 800px;
@@ -82,7 +130,7 @@
     text-align: justify;
   }
   
-  .sobreTitle {
+  .Title {
     font-size: 2rem;
     color: #333;
     margin-bottom: 20px;

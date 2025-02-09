@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { useAxios } from "../hooks/useAxios";
 import api from "../../services/api";
+import { Modal, Button } from "react-bootstrap"; // Importando o Modal e Button do react-bootstrap
 
 import IconLixeira from "../../assets/Lixeira.svg";
+import IconInfo from "../../assets/Info.svg"; // Importando o ícone de informações
 
 import "./style.css";
 
@@ -14,6 +16,8 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [locais, setLocais] = useState([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
+  const [showModal, setShowModal] = useState(false); // Estado para controle do modal
+  const [localSelecionado, setLocalSelecionado] = useState(null); // Estado para armazenar o local selecionado
   const itensPorPagina = 5;
 
   useEffect(() => {
@@ -32,7 +36,10 @@ function Home() {
         };
       });
 
-      setLocais(locaisAtualizados);
+      // Ordenando os locais de forma decrescente (pela propriedade id)
+      const locaisOrdenados = locaisAtualizados.sort((a, b) => b.id - a.id);
+
+      setLocais(locaisOrdenados);
     }
   }, [data, cidadesData, estadosData]);
 
@@ -52,6 +59,12 @@ function Home() {
     } catch (error) {
       console.error("Erro ao deletar local:", error);
     }
+  };
+
+  // Função para abrir o modal e exibir as informações do local
+  const abrirModal = (local) => {
+    setLocalSelecionado(local);
+    setShowModal(true); // Mostra o modal
   };
 
   const locaisFiltrados =
@@ -86,7 +99,7 @@ function Home() {
       {paginaAtual === 1 && (
         <input
           type="text"
-          placeholder="Pesquisar por nome, descrição ou cidade..."
+          placeholder="Pesquisar"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="searchInput"
@@ -116,6 +129,7 @@ function Home() {
                 <td>{local.cidadeNome}</td>
                 <td>{local.estadoNome}</td>
                 <td>
+                  {/* Botão de excluir */}
                   <button onClick={() => deletarLocal(local.id)}>
                     <img
                       src={IconLixeira}
@@ -123,6 +137,10 @@ function Home() {
                       height={20}
                       alt="Excluir"
                     />
+                  </button>
+                  {/* Botão para abrir o modal */}
+                  <button onClick={() => abrirModal(local)}>
+                    <img src={IconInfo} width={20} height={20} alt="Info" />
                   </button>
                 </td>
               </tr>
@@ -156,6 +174,32 @@ function Home() {
           </button>
         </div>
       )}
+
+      {/* Modal para exibir a ficha do local */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{localSelecionado?.nome}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Descrição:</strong> {localSelecionado?.descricao}
+          </p>
+          <p>
+            <strong>Endereço:</strong> {localSelecionado?.endereco}
+          </p>
+          <p>
+            <strong>Cidade:</strong> {localSelecionado?.cidadeNome}
+          </p>
+          <p>
+            <strong>Estado:</strong> {localSelecionado?.estadoNome}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

@@ -9,21 +9,50 @@ body {
   min-height: 100vh;
   max-width: 100vw;
   align-items: center;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   background: linear-gradient(180deg, #D5C6AE, #D5C6AE, #e7e3e7);
 }
 
 
+/* Estilo do containerContato */
 .containerContato {
   display: flex;
   flex-direction: row;
-  gap: 25px; 
-  align-items: center; 
-  justify-content: center; 
+  gap: 25px;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 5vh; 
+  height: 5vh;
   margin: 0 !important;
   padding-top: 0 !important;
   background-color: #73bf61;
+}
+
+/* Responsividade para telas Full HD (1920x1080) */
+@media (min-width: 1920px) {
+  .containerContato {
+    gap: 40px; /* Aumenta o espaçamento entre os itens para telas maiores */
+    height: 7vh; /* Ajusta a altura para um layout mais espaçado */
+    padding-top: 20px; /* Adiciona padding para dar mais destaque ao conteúdo */
+  }
+}
+
+/* Responsividade para telas menores que Full HD */
+@media (max-width: 768px) {
+  .containerContato {
+    flex-direction: column; /* Torna o layout de coluna em telas menores */
+    gap: 15px; /* Diminui o espaçamento entre os itens */
+    height: auto; /* Ajusta a altura */
+    padding: 10px 0; /* Adiciona padding */
+  }
+}
+
+/* Responsividade para celulares em modo retrato */
+@media (max-width: 480px) {
+  .containerContato {
+    gap: 10px; /* Menor espaçamento entre os itens */
+    padding: 5px 0; /* Menos padding */
+    height: auto; /* Ajusta a altura */
+  }
 }
