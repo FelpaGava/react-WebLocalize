@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { useAxios } from "../hooks/useAxios";
 import api from "../../services/api";
-import { Modal, Button } from "react-bootstrap"; // Importando o Modal e Button do react-bootstrap
+import { Modal, Button } from "react-bootstrap";
 
 import IconLixeira from "../../assets/Lixeira.svg";
-import IconInfo from "../../assets/Info.svg"; // Importando o ícone de informações
+import IconInfo from "../../assets/Info.svg";
 
 import "./style.css";
 
@@ -16,8 +16,9 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [locais, setLocais] = useState([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const [showModal, setShowModal] = useState(false); // Estado para controle do modal
-  const [localSelecionado, setLocalSelecionado] = useState(null); // Estado para armazenar o local selecionado
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [localSelecionado, setLocalSelecionado] = useState(null);
   const itensPorPagina = 5;
 
   useEffect(() => {
@@ -36,7 +37,6 @@ function Home() {
         };
       });
 
-      // Ordenando os locais de forma decrescente (pela propriedade id)
       const locaisOrdenados = locaisAtualizados.sort((a, b) => b.id - a.id);
 
       setLocais(locaisOrdenados);
@@ -51,20 +51,24 @@ function Home() {
     return <p>Carregando locais...</p>;
   }
 
-  // Função para deletar um local
-  const deletarLocal = async (id) => {
+  const deletarLocal = async () => {
     try {
-      await api.delete(`Locais/DeletarLocal/${id}`); // Usando o api para deletar o local
-      setLocais(locais.filter((local) => local.id !== id));
+      await api.delete(`Locais/DeletarLocal/${localSelecionado.id}`);
+      setLocais(locais.filter((local) => local.id !== localSelecionado.id));
+      setShowConfirmModal(false);
     } catch (error) {
       console.error("Erro ao deletar local:", error);
     }
   };
 
-  // Função para abrir o modal e exibir as informações do local
+  const confirmarExclusao = (local) => {
+    setLocalSelecionado(local);
+    setShowConfirmModal(true);
+  };
+
   const abrirModal = (local) => {
     setLocalSelecionado(local);
-    setShowModal(true); // Mostra o modal
+    setShowModal(true);
   };
 
   const locaisFiltrados =
@@ -129,8 +133,7 @@ function Home() {
                 <td>{local.cidadeNome}</td>
                 <td>{local.estadoNome}</td>
                 <td>
-                  {/* Botão de excluir */}
-                  <button onClick={() => deletarLocal(local.id)}>
+                  <button onClick={() => confirmarExclusao(local)}>
                     <img
                       src={IconLixeira}
                       width={20}
@@ -138,7 +141,6 @@ function Home() {
                       alt="Excluir"
                     />
                   </button>
-                  {/* Botão para abrir o modal */}
                   <button onClick={() => abrirModal(local)}>
                     <img src={IconInfo} width={20} height={20} alt="Info" />
                   </button>
@@ -175,7 +177,7 @@ function Home() {
         </div>
       )}
 
-      {/* Modal para exibir a ficha do local */}
+      {/* Modal de Informações */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{localSelecionado?.nome}</Modal.Title>
@@ -197,6 +199,28 @@ function Home() {
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Exclusão</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Tem certeza de que deseja excluir o local{" "}
+          <strong>{localSelecionado?.nome}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmModal(false)}
+          >
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={deletarLocal}>
+            Excluir
           </Button>
         </Modal.Footer>
       </Modal>

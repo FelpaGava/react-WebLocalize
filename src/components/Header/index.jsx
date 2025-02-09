@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 import Logo from "../../assets/Logo.svg";
@@ -11,6 +11,8 @@ import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Header() {
+  const location = useLocation();
+
   return (
     <div className="container">
       <div className="containerContato">
@@ -37,11 +39,26 @@ function Header() {
           <img src={Logo} width={100} height={100} alt="Logotipo" />
           <h3>WebLocalize</h3>
           <div className="Links">
-            {/* Removido o BrowserRouter daqui */}
-            <Nav variant="pills">
-              <Nav.Link as={Link} to="/">Página inicial</Nav.Link>
-              <Nav.Link as={Link} to="/cadastrarLocal">Cadastrar local</Nav.Link>
-              <Nav.Link as={Link} to="/sobre">Sobre</Nav.Link>
+            <Nav variant="pills" activeKey={location.pathname}>
+              <Nav.Link as={Link} to="/" eventKey="/" className="nav-item">
+                Página inicial
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/cadastrarLocal"
+                eventKey="/cadastrarLocal"
+                className="nav-item"
+              >
+                Cadastrar local
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/sobre"
+                eventKey="/sobre"
+                className="nav-item"
+              >
+                Sobre
+              </Nav.Link>
             </Nav>
           </div>
         </div>

@@ -1,35 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import api from "../../services/api"; // Importando a instância do axios
+import api from "../../services/api"; 
 import { useAxios } from "../hooks/useAxios";
 import "./style.css";
 
 function CadastroLocal() {
   const { data: estadosData, error: estadosError } = useAxios(
     "Estados/ListarEstados"
-  ); // Puxando estados cadastrados
+  ); 
 
   const [showModal, setShowModal] = useState(false);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [endereco, setEndereco] = useState("");
-  const [cidade, setCidade] = useState(""); // Agora cidade será o nome da cidade
-  const [estado, setEstado] = useState(""); // Estado selecionado
+  const [cidade, setCidade] = useState(""); 
+  const [estado, setEstado] = useState(""); 
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Função para abrir o modal
+  
   const handleShow = () => setShowModal(true);
 
-  // Função para fechar o modal e limpar os dados inseridos
   const handleClose = () => {
     setShowModal(false);
-    // Limpa os campos ao fechar
     setNome("");
     setDescricao("");
     setEndereco("");
     setCidade("");
     setEstado("");
-    setErrorMessage(""); // Limpa qualquer mensagem de erro
+    setErrorMessage(""); 
   };
 
   const handleCadastrar = async () => {
@@ -38,31 +36,30 @@ function CadastroLocal() {
       return;
     }
 
-    // Função auxiliar para tentar cadastrar o local duas vezes
+    
     const tentarCadastrarLocal = async (tentativa = 1) => {
       try {
         let cidadeID;
 
-        // Normalizar o nome da cidade removendo espaços extras
+      
         const cidadeTrimmed = cidade.trim();
 
         console.log("Buscando cidade por nome:", cidadeTrimmed);
 
-        // Tentar encontrar a cidade primeiro
+     
         const cidadeResponse = await api.get(
           `Cidades/BuscarCidadePorNome/${cidadeTrimmed}`
         );
 
         console.log("Resposta da busca da cidade:", cidadeResponse.data);
 
-        // Verificar se a cidade foi encontrada
         if (
           cidadeResponse.data.status === false ||
           !cidadeResponse.data.dados
         ) {
           console.log("Cidade não encontrada, criando uma nova cidade...");
 
-          // Se não encontrar a cidade, cria-la
+       
           const cidadeData = {
             nome: cidadeTrimmed,
             estadoID: estado,
@@ -84,36 +81,35 @@ function CadastroLocal() {
             criarCidadeResponse.data.status === false ||
             !criarCidadeResponse.data.dados
           ) {
-            // Exibir a mensagem do erro específico da API
+    
             setErrorMessage(
               criarCidadeResponse.data.mensagem || "Erro ao cadastrar a cidade."
             );
             return;
           }
 
-          // Obter o ID da cidade criada
+       
           cidadeID = criarCidadeResponse.data.dados.cidadeID;
         } else {
-          // Se a cidade já existe, usar o ID retornado
           cidadeID = cidadeResponse.data.dados.cidadeID;
         }
 
         console.log("ID da cidade:", cidadeID);
 
-        // Agora, cadastrar o local com o cidadeID
+  
         const local = {
           nome,
           descricao,
           endereco,
-          cidadeID, // Usando o ID da cidade
+          cidadeID,
           estadoRelacao: {
-            estadoID: estado, // Estado selecionado
+            estadoID: estado, 
           },
         };
 
         console.log("Dados enviados para cadastro do local:", local);
 
-        // Cadastrar o local
+
         const response = await api.post("Locais/CriarLocal", local);
 
         console.log("Resposta do cadastro do local:", response.data);
@@ -125,14 +121,13 @@ function CadastroLocal() {
           return;
         }
 
-        handleClose(); // Fechar o modal após o cadastro
-        // Limpar os campos após o cadastro bem-sucedido
+        handleClose(); 
         setNome("");
         setDescricao("");
         setEndereco("");
         setCidade("");
         setEstado("");
-        setErrorMessage(""); // Limpar a mensagem de erro
+        setErrorMessage(""); 
 
         alert("Local cadastrado com sucesso!");
       } catch (error) {
@@ -147,15 +142,15 @@ function CadastroLocal() {
           setErrorMessage("Erro desconhecido ao cadastrar local.");
         }
 
-        // Se a primeira tentativa falhar, tenta novamente
+      
         if (tentativa === 1) {
           console.log("Tentativa 1 falhou, tentando novamente...");
-          tentarCadastrarLocal(2); // Chama a função novamente, agora na segunda tentativa
+          tentarCadastrarLocal(2);
         }
       }
     };
 
-    // Começa a primeira tentativa de cadastro
+    
     tentarCadastrarLocal(1);
   };
 
@@ -164,7 +159,7 @@ function CadastroLocal() {
     return <p>Erro ao carregar os estados. Tente novamente mais tarde.</p>;
   }
 
-  // Log para depuração
+
   useEffect(() => {
     console.log("Dados de estados:", estadosData);
   }, [estadosData]);
@@ -222,7 +217,7 @@ function CadastroLocal() {
         Cadastrar Novo Local
       </Button>
 
-      {/* Modal para preencher as informações do novo local */}
+   
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Cadastrar Novo Local</Modal.Title>

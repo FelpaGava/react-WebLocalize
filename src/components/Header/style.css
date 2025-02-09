@@ -1,4 +1,4 @@
-/* Estilo do containerHeader */
+
 .containerHeader {
     display: flex;
     justify-content: center;
@@ -25,27 +25,39 @@
     align-items: center;
     justify-content: space-between;
   }
+
+  .nav-item {
+    color: black !important;
+    font-weight: bold;
+  }
   
-  /* Responsividade para telas Full HD (1920x1080) */
+  .nav-item.active {
+    background-color: green !important;
+    color: white !important;
+    border-radius: 5px;
+  }
+  
+  
+
   @media (min-width: 1920px) {
     .containerHeader {
-      max-width: 80%; /* Aumenta a largura máxima para caber melhor na tela */
-      padding: 20px 0; /* Ajusta o padding para dar um pouco mais de espaçamento */
+      max-width: 80%; 
+      padding: 20px 0; 
     }
   }
   
-  /* Responsividade para telas menores que Full HD */
+
   @media (max-width: 768px) {
     .containerHeader {
-      max-width: 95%; /* Aumenta a largura para caber melhor em telas menores */
+      max-width: 95%; 
     }
   }
   
-  /* Responsividade para celulares em modo retrato */
+
   @media (max-width: 480px) {
     .containerHeader {
       max-width: 95%;
-      padding: 15px 0; /* Menos padding */
+      padding: 15px 0; 
     }
   }
   
