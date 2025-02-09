@@ -1,35 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { useAxios } from "../hooks/useAxios";
+import api from "../../services/api";
+
+import IconLixeira from "../../assets/Lixeira.svg";
+
 import "./style.css";
 
 function Home() {
   const { data, error } = useAxios("Locais/ListarLocais");
   const { data: cidadesData, estadosData } = useAxios("Cidades/ListarCidades");
 
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [locais, setLocais] = useState([]); 
-  const [paginaAtual, setPaginaAtual] = useState(1); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [locais, setLocais] = useState([]);
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const itensPorPagina = 5;
 
-  
   useEffect(() => {
-    console.log("Dados Locais:", data);
-    console.log("Dados Cidades:", cidadesData);
-    console.log("Dados Estados:", estadosData);
-
     if (data && data.dados && Array.isArray(data.dados.$values)) {
-     
       const locaisAtualizados = data.dados.$values.map((local) => {
-   
         const cidade = cidadesData?.$values?.find(
           (cidade) => cidade.cidadeID === local.cidadeID
         );
-
-    
         const estado = estadosData?.$values?.find(
           (estado) => estado.estadoID === cidade?.estadoID
         );
-
         return {
           ...local,
           cidadeNome: cidade ? cidade.nome : "Cidade não encontrada",
@@ -49,6 +44,16 @@ function Home() {
     return <p>Carregando locais...</p>;
   }
 
+  // Função para deletar um local
+  const deletarLocal = async (id) => {
+    try {
+      await api.delete(`Locais/DeletarLocal/${id}`); // Usando o api para deletar o local
+      setLocais(locais.filter((local) => local.id !== id));
+    } catch (error) {
+      console.error("Erro ao deletar local:", error);
+    }
+  };
+
   const locaisFiltrados =
     paginaAtual === 1
       ? locais.filter(
@@ -59,7 +64,6 @@ function Home() {
         )
       : locais;
 
-
   const totalPaginas = Math.ceil(locaisFiltrados.length / itensPorPagina);
   const indiceInicial = (paginaAtual - 1) * itensPorPagina;
   const locaisPaginados = locaisFiltrados.slice(
@@ -67,7 +71,6 @@ function Home() {
     indiceInicial + itensPorPagina
   );
 
- 
   const mudarPagina = (numeroPagina) => {
     if (numeroPagina >= 1 && numeroPagina <= totalPaginas) {
       setPaginaAtual(numeroPagina);
@@ -90,15 +93,16 @@ function Home() {
         />
       )}
 
-      <Table striped bordered hover size="sm" className="tableLocais" >
+      <Table striped bordered hover size="sm" className="tabelaLocais">
         <thead>
           <tr>
-            <th>#</th>
+            <th>ID</th>
             <th>Nome</th>
             <th>Descrição</th>
             <th>Endereço</th>
             <th>Cidade</th>
             <th>Estado</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -111,16 +115,25 @@ function Home() {
                 <td>{local.endereco}</td>
                 <td>{local.cidadeNome}</td>
                 <td>{local.estadoNome}</td>
+                <td>
+                  <button onClick={() => deletarLocal(local.id)}>
+                    <img
+                      src={IconLixeira}
+                      width={20}
+                      height={20}
+                      alt="Excluir"
+                    />
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="6">Nenhum local encontrado</td>
+              <td colSpan="7">Nenhum local encontrado</td>
             </tr>
           )}
         </tbody>
       </Table>
-    
 
       {totalPaginas > 1 && (
         <div className="paginacao">

@@ -1,27 +1,19 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Nav/Home";
 import CadastroLocal from "./components/Nav/CadastroLocal";
 import Sobre from "./components/Nav/Sobre";
 
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" index element={<Home />}></Route>
-          <Route
-            path="/cadastrarLocal"
-            index
-            element={<CadastroLocal />}
-          ></Route>
-          <Route path="/sobre" index element={<Sobre />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cadastrarLocal" element={<CadastroLocal />} />
+        <Route path="/sobre" element={<Sobre />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

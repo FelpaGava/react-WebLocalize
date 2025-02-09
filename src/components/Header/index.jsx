@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 import Logo from "../../assets/Logo.svg";
@@ -37,19 +37,12 @@ function Header() {
           <img src={Logo} width={100} height={100} alt="Logotipo" />
           <h3>WebLocalize</h3>
           <div className="Links">
-            <BrowserRouter>
-              <Nav variant="pills">
-                <Nav.Link as={Link} to="/">
-                  Página inicial
-                </Nav.Link>
-                <Nav.Link as={Link} to="/cadastrarLocal">
-                  Cadastrar local
-                </Nav.Link>
-                <Nav.Link as={Link} to="/sobre">
-                  Sobre
-                </Nav.Link>
-              </Nav>
-            </BrowserRouter>
+            {/* Removido o BrowserRouter daqui */}
+            <Nav variant="pills">
+              <Nav.Link as={Link} to="/">Página inicial</Nav.Link>
+              <Nav.Link as={Link} to="/cadastrarLocal">Cadastrar local</Nav.Link>
+              <Nav.Link as={Link} to="/sobre">Sobre</Nav.Link>
+            </Nav>
           </div>
         </div>
       </header>
