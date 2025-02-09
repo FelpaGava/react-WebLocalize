@@ -1,57 +1,59 @@
 # React WebLocalize
 
-Este projeto é uma aplicação React para localização de conteúdo.
+Este projeto utiliza a API "Services/api" para fornecer funcionalidades de localização. Este guia irá ajudá-lo a instalar e utilizar a API no seu projeto.
 
 ## Instalação
 
-1. Clone o repositório:
+1. Clone o repositório para o seu ambiente local:
     ```bash
     git clone https://github.com/seu-usuario/react-WebLocalize.git
-    ```
-2. Navegue até o diretório do projeto:
-    ```bash
     cd react-WebLocalize
     ```
-3. Instale as dependências:
+
+2. Instale as dependências do projeto:
     ```bash
     npm install
     ```
 
-## Uso
+3. Instale a API "Services/api":
+    ```bash
+    npm install services/api
+    ```
 
-1. Inicie o servidor de desenvolvimento:
+## Utilização
+
+### Configuração da API
+
+Esta API deve ser do arquivo [API_WebLocalize](https://github.com/FelpaGava/API_WebLocalize), o qual se encontra em meu perfil.
+
+1. Crie um arquivo de configuração para a API, por exemplo, `apiConfig.js`:
+    ```javascript
+    import Api from 'services/api';
+
+    const api = new Api({
+        baseURL: 'https://sua-api-url.com',
+    });
+
+    export default api;
+    ```
+
+### Utilizando a API no Projeto
+
+2. Execute o projeto:
     ```bash
     npm start
     ```
-2. Abra o navegador e acesse `http://localhost:3000`.
 
-## Estrutura do Projeto
-
-- `src/`: Contém o código-fonte da aplicação.
-  - `components/`: Componentes React reutilizáveis.
-  - `locales/`: Arquivos de localização.
-  - `App.js`: Componente principal da aplicação.
-  - `index.js`: Ponto de entrada da aplicação.
+Agora você deve ver os dados sendo carregados da API e exibidos no seu aplicativo React.
 
 ## Contribuição
 
-1. Faça um fork do projeto.
-2. Crie uma nova branch:
-    ```bash
-    git checkout -b minha-nova-feature
-    ```
-3. Faça suas alterações e commit:
-    ```bash
-    git commit -m 'Adiciona nova feature'
-    ```
-4. Envie para o repositório remoto:
-    ```bash
-    git push origin minha-nova-feature
-    ```
-5. Abra um Pull Request.
+Se você quiser contribuir com este projeto, por favor, faça um fork do repositório e envie um pull request com suas alterações.
 
 ## Autor
 
 Autor: [Marcos Felipe Gava da Cruz]
+
 Contato: [marcosfelipegava@gmail.com]
+
 LinkedIn: [(https://www.linkedin.com/in/marcos-felipe-gava-093910263/)]
