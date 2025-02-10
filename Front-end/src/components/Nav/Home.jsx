@@ -97,7 +97,6 @@ function Home() {
         <h5>Lista de Locais</h5>
       </div>
 
-      {/* 🔍 Barra de pesquisa sempre visível */}
       <input
         type="text"
         placeholder="Pesquisar"
@@ -122,7 +121,7 @@ function Home() {
           {locaisPaginados.length > 0 ? (
             locaisPaginados.map((local) => (
               <tr key={local.id}>
-                <td>{local.id}</td> {/* 🔄 Agora exibe o ID real do banco */}
+                <td>{local.id}</td>
                 <td>{local.nome}</td>
                 <td>{local.descricao}</td>
                 <td>{local.endereco}</td>
@@ -151,7 +150,6 @@ function Home() {
         </tbody>
       </Table>
 
-      {/* 📄 Paginação */}
       {totalPaginas > 1 && (
         <div className="paginacao">
           <button
@@ -174,7 +172,6 @@ function Home() {
         </div>
       )}
 
-      {/* Modal de Informações */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{localSelecionado?.nome}</Modal.Title>
@@ -200,7 +197,6 @@ function Home() {
         </Modal.Footer>
       </Modal>
 
-      {/* Modal de Confirmação de Exclusão */}
       <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmar Exclusão</Modal.Title>
