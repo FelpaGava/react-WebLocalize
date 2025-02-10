@@ -9,8 +9,8 @@ Este projeto foi desenvolvido como parte de um teste técnico para demonstrar mi
 Antes de começar, certifique-se de ter os seguintes itens instalados em sua máquina:
 
 - **SQL Server**: Para gerenciar o banco de dados.
-- **Visual Studio**: Para compilar e executar a aplicação.
-- **.NET SDK**: Compatível com a versão utilizada no projeto.
+- **.NET SDK**: Versão utilizada no projeto: 9.0.100.
+- **NODE.JS**: Versão utilizada no projeto: v20.17.0.
 
 ---
 
@@ -29,22 +29,49 @@ Antes de começar, certifique-se de ter os seguintes itens instalados em sua má
 2. Substitua o valor de `"server=*INSIRA AQUI*"` no campo `"DefaultConnection"` pelo nome do seu servidor copiado anteriormente. Exemplo:
    
    ```json
-   "DefaultConnection": "server=NOME_DO_SEU_SERVIDOR;Database=NOME_DO_BANCO;Trusted_Connection=True;trustservercertificate=true"
+   "DefaultConnection": "server=NOME_DO_SEU_SERVIDOR;Database=API_PontosTuristicos;Trusted_Connection=True;trustservercertificate=true"
 
 ## 🛠️ Criando e Configurando o Banco de Dados
 
-### 1. Executando Migrações
+### 1. Instrução para utilização da ferramenta.
 
-1. Abra o **Visual Studio**.
-2. Navegue até **Ferramentas** > **Gerenciador de Pacotes do NuGet** > **Console do Gerenciador de Pacotes**.
-3. No console, execute o seguinte comando para criar a migração inicial:
-   
-   ```bash
-   add-migration CriandoBancoDeDados
+Instale a ferramenta global do EF Core
 
-Isso gerará os arquivos de migração necessários.
+```bash
+dotnet tool install --global dotnet-ef
+```
 
-Após a criação da migração, execute o comando abaixo para aplicar as alterações ao banco de dados:
+Ou, se já tiver instalado e precisar atualizar:
+
+```Bash
+dotnet tool update --global dotnet-ef
+```
+
+Em seguida, executar o comando:
+
+```bash
+dotnet ef database update
+```
+
+### 2. Executando a criação do Banco de Dados.
+
+***Como executar No Visual Studio:***
+
+- Abrir o Console do Gerenciador de Pacotes NuGet;
+- Ir em Ferramentas → Gerenciador de Pacotes NuGet → Console do Gerenciador de Pacotes;
+- Digitar e executar update-database;
+
+***No Visual Studio Code:***
+
+- Abrir o Terminal no VS Code (Ctrl + ` ou Exibir → Terminal).
+- Certificar-se de estar na pasta raiz do projeto.
+- Executar:
+
+    ```bash
+    dotnet ef database update
+    ```
+
+Execute o comando abaixo para executar as migrações ao banco de dados:
 
 
 ```update-database```
@@ -54,6 +81,13 @@ Após a criação da migração, execute o comando abaixo para aplicar as altera
 1. No **SQL Server Management Studio**, verifique se o banco de dados foi criado com sucesso.
 2. Confira se todas as tabelas e estruturas estão corretamente configuradas.
 
+***API_PontosTuristicos:***
+
+**Tabelas**
+- Locais
+- Cidades
+- Estados
+
 ---
 
 ## 🚀 Executando a Aplicação
@@ -62,13 +96,18 @@ Após a criação da migração, execute o comando abaixo para aplicar as altera
 2. Execute o projeto utilizando o comando `F5` ou clicando em **Iniciar**.
 3. A API estará disponível no endereço padrão (geralmente `https://localhost:5019` ou `http://localhost:5018`).
 
----
+1. No **Visual Studio Code**
+2. Abra o terminal (Ctrl + ` ou Exibir → Terminal).
+3. Certifique-se de estar na pasta do projeto.
+4. Execute o seguinte comando para rodar a aplicação:
 
-## 📝 Considerações Finais
+```
+dotnet run
+```
 
-Este projeto foi desenvolvido com atenção aos detalhes, seguindo boas práticas de desenvolvimento e configuração. Estou extremamente motivado para contribuir com a equipe e agregar valor à empresa. Caso haja alguma dúvida ou feedback, estou à disposição para discutir e aprimorar ainda mais este trabalho.
+## 💻 URL - Caminho para testes:
 
-Agradeço pela oportunidade e espero fazer parte do time!
+   http://localhost:5018/swagger
 
 ---
 
@@ -93,18 +132,24 @@ Este projeto utiliza a API "Services/api" para fornecer funcionalidades de local
     npm install
     ```
 
+3. Em caso de incompatibilidade com o arquivo `package-lock.json`, faça a exlusão do arquivo e o instale novamente, com o comando: 
+
+```bash
+npm install
+```
+
 ## Utilização
 
 ### Configuração da API
 
-Esta API deve ser do arquivo [API_WebLocalize](https://github.com/FelpaGava/API_WebLocalize), o qual se encontra em meu perfil.
+A API já se encontra no projeto, dentro da pasta **Back-end**. Para configurar o endereço da API no Front-end, edite o arquivo `Services/api.jsx`:
 
 1. Arquivo de configuração para a API. Aqui o usuario irá configurar a URL da rota da API, caso sua porta for diferente do padrão estabelecido. `Services/api.jsx`:
     ```javascript
     import Api from 'services/api';
 
     const api = new Api({
-        baseURL: 'https://sua-api-url.com',
+        baseURL: 'http://localhost:5018/api/',
     });
 
     export default api;
@@ -122,6 +167,14 @@ Agora você deve ver os dados sendo carregados da API e exibidos no seu aplicati
 ## Contribuição
 
 Se você quiser contribuir com este projeto, por favor, faça um fork do repositório e envie um pull request com suas alterações.
+
+## 📝 Considerações Finais
+
+Este projeto foi desenvolvido com atenção aos detalhes, seguindo boas práticas de desenvolvimento e configuração. Estou extremamente motivado para contribuir com a equipe e agregar valor à empresa. Caso haja alguma dúvida ou feedback, estou à disposição para discutir e aprimorar ainda mais este trabalho.
+
+Agradeço pela oportunidade e espero fazer parte do time!
+
+---
 
 ## Autor
 
