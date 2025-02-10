@@ -21,7 +21,7 @@ Este projeto utiliza a API "Services/api" para fornecer funcionalidades de local
 
 Esta API deve ser do arquivo [API_WebLocalize](https://github.com/FelpaGava/API_WebLocalize), o qual se encontra em meu perfil.
 
-1. Arquivo de configuração para a API, `Services/api.jsx`:
+1. Arquivo de configuração para a API. Aqui o usuario irá configurar a URL da rota da API, caso sua porta for diferente do padrão estabelecido. `Services/api.jsx`:
     ```javascript
     import Api from 'services/api';
 
