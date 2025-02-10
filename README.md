@@ -15,18 +15,13 @@ Este projeto utiliza a API "Services/api" para fornecer funcionalidades de local
     npm install
     ```
 
-3. Instale a API "Services/api":
-    ```bash
-    npm install services/api
-    ```
-
 ## Utilização
 
 ### Configuração da API
 
 Esta API deve ser do arquivo [API_WebLocalize](https://github.com/FelpaGava/API_WebLocalize), o qual se encontra em meu perfil.
 
-1. Crie um arquivo de configuração para a API, por exemplo, `apiConfig.js`:
+1. Arquivo de configuração para a API, `Services/api.jsx`:
     ```javascript
     import Api from 'services/api';
 
@@ -41,7 +36,7 @@ Esta API deve ser do arquivo [API_WebLocalize](https://github.com/FelpaGava/API_
 
 2. Execute o projeto:
     ```bash
-    npm start
+    npm run dev
     ```
 
 Agora você deve ver os dados sendo carregados da API e exibidos no seu aplicativo React.
