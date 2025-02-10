@@ -33,18 +33,9 @@ Antes de começar, certifique-se de ter os seguintes itens instalados em sua má
 
 ## 🛠️ Criando e Configurando o Banco de Dados
 
-### 1. Executando Migrações
+### 1. Executando a criação do Banco de Dados.
 
-1. Abra o **Visual Studio**.
-2. Navegue até **Ferramentas** > **Gerenciador de Pacotes do NuGet** > **Console do Gerenciador de Pacotes**.
-3. No console, execute o seguinte comando para criar a migração inicial:
-   
-   ```bash
-   add-migration CriandoBancoDeDados
-
-Isso gerará os arquivos de migração necessários.
-
-Após a criação da migração, execute o comando abaixo para aplicar as alterações ao banco de dados:
+Execute o comando abaixo para executar as migrações ao banco de dados:
 
 
 ```update-database```
