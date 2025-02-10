@@ -71,15 +71,12 @@ function Home() {
     setShowModal(true);
   };
 
-  const locaisFiltrados =
-    paginaAtual === 1
-      ? locais.filter(
-          (local) =>
-            local.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            local.descricao.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            local.cidadeNome.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      : locais;
+  const locaisFiltrados = locais.filter(
+    (local) =>
+      local.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      local.descricao.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      local.cidadeNome.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const totalPaginas = Math.ceil(locaisFiltrados.length / itensPorPagina);
   const indiceInicial = (paginaAtual - 1) * itensPorPagina;
@@ -100,15 +97,14 @@ function Home() {
         <h5>Lista de Locais</h5>
       </div>
 
-      {paginaAtual === 1 && (
-        <input
-          type="text"
-          placeholder="Pesquisar"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="searchInput"
-        />
-      )}
+      {/* 🔍 Barra de pesquisa sempre visível */}
+      <input
+        type="text"
+        placeholder="Pesquisar"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="searchInput"
+      />
 
       <Table striped bordered hover size="sm" className="tabelaLocais">
         <thead>
@@ -124,9 +120,9 @@ function Home() {
         </thead>
         <tbody>
           {locaisPaginados.length > 0 ? (
-            locaisPaginados.map((local, index) => (
+            locaisPaginados.map((local) => (
               <tr key={local.id}>
-                <td>{indiceInicial + index + 1}</td>
+                <td>{local.id}</td> {/* 🔄 Agora exibe o ID real do banco */}
                 <td>{local.nome}</td>
                 <td>{local.descricao}</td>
                 <td>{local.endereco}</td>
@@ -155,6 +151,7 @@ function Home() {
         </tbody>
       </Table>
 
+      {/* 📄 Paginação */}
       {totalPaginas > 1 && (
         <div className="paginacao">
           <button
