@@ -19,9 +19,9 @@ function Header() {
         <a href="https://wa.me/551434049999">
           <img src={IconWhatsapp} width={25} height={25} alt="WhatsApp" />
         </a>
-        <h6>(14) 3404-9999</h6>
+        <h6>(14) 99809-8934</h6>
         <h6>|</h6>
-        <h6>suporte@teste.com.br</h6>
+        <h6>marcosfelipegava@gmail.com</h6>
         <h6>|</h6>
         <h6>Siga-nos:</h6>
 
